@@ -1,13 +1,13 @@
-using("mt_trapezoid.jl")
+using("mt_quadTrapezoid.jl")
 
-function mt_fourier(N, Nq, Nx)
+function mt_FourierExpansion(N, Nq, Nx)
 
     #
     # N wave modes (1:∞)
     # Nq number of quadrature points
     # Nx number of coordinate points along the period domain
     #
-    F     = zeros(Float64, Nx)
+    F = zeros(Float64, Nx)
     
     #       1
     # âo = ----∫_{a,b} u(x)cos(x)dx
