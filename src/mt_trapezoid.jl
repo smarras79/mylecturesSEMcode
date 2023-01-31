@@ -1,4 +1,4 @@
-function quad_trapezoid(f; a, b, Nq)
+function mt_quadTrapezoid(f; a, b, Nq)
     
     Δx = (b - a)/Nq
     ∫ = Δx*(f(a) + f(b))/2
