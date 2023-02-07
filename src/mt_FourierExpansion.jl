@@ -10,7 +10,7 @@ function mt_FourierExpansion(N, Nq, Nx)
     F = zeros(Float64, Nx)
     
     #       1
-    # âo = ----∫_{a,b} u(x)cos(x)dx
+    # âo = ----∫_{a,b} u(x)dx
     #       2π
     u(x) = 3.0/(5.0 - 4.0*cos(x))
     a0 = mt_quad_Trapezoid(u; a=0.0, b=2π, Nq)/(2π)
