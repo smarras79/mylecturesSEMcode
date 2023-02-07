@@ -37,7 +37,7 @@ function mt_FourierExpansion(N, Nq, Nx)
             sumsin = sumsin + bn*sin(n*xi)
             
         end
-        F[i]     = a0 + sumcos + sumsin
+        F[i] = a0 + sumcos + sumsin
     end
 end
 
