@@ -1,15 +1,7 @@
 using Plots
 using Printf
 
-function quad_trapezoid(f; a, b, Nq)   
-    Δx = (b - a)/Nq
-    If = Δx * (f(a) + f(b))/2
-    for k = 1:Nq - 1
-        xk = (b - a) * k/Nq + a
-        If = If + Δx*f(xk)
-    end
-    return If
-end
+include("./src/mt_trapezoid.jl")
 
 function mt_fourier(N, Nq, Nx, expansion_type)
     
@@ -35,38 +27,36 @@ function mt_fourier(N, Nq, Nx, expansion_type)
         # âo = ----∫_{a,b} u(x)cos(x)dx
         #       2π
         u(x) = 3.0/(5.0 - 4.0*cos(x))
-        a0 = quad_trapezoid(u; a=0.0, b=2π, Nq)/(2π)
+        a0 = mt_quadTrapezoid(u; a=0.0, b=2π, Nq)/(2π)
         
         for i = 1:Nx
             #x-oordinates
             xi = 2π*i/Nx
             xcoord[i] = xi
             
-            sumcos = 0.0
-            sumsin = 0.0
-            an = 0.0
-            bn = 0.0
+            ∑ancosx = ∑bnsinx = 0.0
+            an = bn = 0.0
             for n = 1:N
                 #n-modes
                 
                 #       1
-                # ân = ----∫_{a,b} u(x)cos(x)dx
+                # an = ----∫_{a,b} u(x)cos(x)dx
                 #      cn⋅π
                 uxcos(x) = u(x)*cos(n*x)
-                an = quad_trapezoid(uxcos; a=0.0, b=2π, Nq)/π
+                an = mt_quadTrapezoid(uxcos; a=0.0, b=2π, Nq)/π
                 
                 #       1
-                # b̂n = ---∫_{a,b} u(x)sin(x)dx
+                # bn = ---∫_{a,b} u(x)sin(x)dx
                 #       π
                 uxsin(x) = u(x)*sin(n*x)
-                bn = quad_trapezoid(uxsin; a=0.0, b=2π, Nq)/π
+                bn = mt_quadTrapezoid(uxsin; a=0.0, b=2π, Nq)/π
                 
-                sumcos = sumcos + an*cos(n*xi)
-                sumsin = sumsin + bn*sin(n*xi)
+                ∑ancosx += an*cos(n*xi)
+                ∑bnsinx += bn*sin(n*xi)
                 
             end
             
-            pu[i]     = a0 + sumcos + sumsin
+            pu[i]     = a0 + ∑ancosx + ∑bnsinx
             uexact[i] = 3.0/(5.0 - 4.0*cos(xi))
         end
     end
