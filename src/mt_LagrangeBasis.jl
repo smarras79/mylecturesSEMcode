@@ -26,9 +26,7 @@ function mt_buildLagrange(; order=1, Nq=1)
     for l=1:Nq
         xl = x[l]
 
-        #Construct Basis
         for i=1:order+1
-            
             xi        = ξ[i]
             L[i,l]    = 1.0
             dLdx[i,l] = 0.0
@@ -40,7 +38,7 @@ function mt_buildLagrange(; order=1, Nq=1)
                     L[i,l] = L[i,l]*(xl - xj)/(xi - xj)
                 end
                 
-                ddL=1
+                #=ddL=1
                 if (j != i)
                     for k=1:order+1
                         xk = ξ[k]
@@ -51,7 +49,7 @@ function mt_buildLagrange(; order=1, Nq=1)
                         end
                     end
                     dLdx[i, l] = dLdx[i, l] + ddL/(xi - xj)
-                end
+                end=#
             end
         end
     end
