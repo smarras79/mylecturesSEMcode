@@ -15,15 +15,11 @@ function LegendreAndDerivativeAndQ(p, x)
               if we intendt to use particularly large nop we should examine Yakimiw 1996
          """
 
-    ϕ   ::Float64=0.0
-    dϕ  ::Float64=0.0
-    ϕp1 ::Float64=0.0
-    dϕp1::Float64=0.0
-    ϕm1 ::Float64=0.0
-    dϕm1::Float64=0.0
-    ϕm2 ::Float64=0.0
-    dϕm2::Float64=0.0
-    
+    ϕ   = dϕ   = Float64(0.0)
+    ϕm1 = dϕm1 = Float64(0.0)
+    ϕm2 = dϕm2 = Float64(0.0)
+    ϕp1 = dϕp1 = Float64(0.0)
+
     #st_legendre Legendre;  
     if (p == 0) #Order 0 case
         ϕ    = 1.0
