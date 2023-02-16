@@ -1,4 +1,4 @@
-function LegendreAndDerivativeAndQ(p, x)
+function mt_LegendreAndDerivativeAndQ(p::Int64, x::Float64)
     
     """
              Evaluate by recursion, the Legendre polynomial of order p
