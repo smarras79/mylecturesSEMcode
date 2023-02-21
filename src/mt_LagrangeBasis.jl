@@ -1,5 +1,3 @@
-using Plots
-
 function mt_LagrangeBasis!()
     
     p = 2
@@ -11,11 +9,19 @@ end
 
 function mt_buildLagrange(; order=1, Nq=1)
 
+    #------------------------------------------------------------------
+    # A note on notation:
+    #
+    # L[i,l] is the digital equivalent of Lᵢ(xk) in the book
+    # where 'i' indicates the iᵗʰ Lagrange basis that is evaluated
+    # at the kᵗʰ quadrature point xk
+    #------------------------------------------------------------------
+    
     #
     # Nq: number of quadrature points
     #
     ξ = Array{Float64}(undef, 1)
-    ξ = range(-1, 1,  order + 1)
+    ξ = range(-1, 1,  order + 1) # NOTICE: use LegendreGaussNodesAndWeights() for LGL points instead of equally spaced.
 
     x = Array{Float64}(undef, 1)
     x = range(-1, 1, Nq)
@@ -24,9 +30,10 @@ function mt_buildLagrange(; order=1, Nq=1)
     L = dLdx = zeros(order+1, Nq)
     
     for l=1:Nq
-        xl = x[l]
+        xl = ξq[l]
 
         for i=1:order+1
+            
             xi        = ξ[i]
             L[i,l]    = 1.0
             dLdx[i,l] = 0.0
@@ -38,7 +45,7 @@ function mt_buildLagrange(; order=1, Nq=1)
                     L[i,l] = L[i,l]*(xl - xj)/(xi - xj)
                 end
                 
-                #=ddL=1
+                ddL=1
                 if (j != i)
                     for k=1:order+1
                         xk = ξ[k]
@@ -49,26 +56,10 @@ function mt_buildLagrange(; order=1, Nq=1)
                         end
                     end
                     dLdx[i, l] = dLdx[i, l] + ddL/(xi - xj)
-                end=#
+                end
             end
         end
     end
 
-    
-    #Plot to PDF
-    plt = plot()
-    for p=1:order+1
-        L_legend = string("L(x) p=", p)
-
-        plt = plot!(x, L[p,:], label=[L_legend], lw=4)
-        plt = scatter!(ξ, ξ.*0)
-        display(plt)
-    end
-    #fname = string("tm_Lagrange.pdf")
-    #savefig(fname)
-    #savefig(plt, fname)
-    
     return (L, dLdx)
 end
-
-mt_LagrangeBasis!()

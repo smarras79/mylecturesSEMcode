@@ -4,10 +4,7 @@ using("mt_Legendre.jl")
 # LG points and weights
 #
 function mt_LegendreGaussNodesAndWeights!(Legendre::St_Legendre, lg::St_lg, p::Int64)
-    """
-          Compute the Nodes and Weights for the Legendre Gauss Quadrature
-          using Algorithm 23 of Kopriva's book valid for p ≤  200
-       """
+    
     Δ::Float64 = 0.0
     
     NITER = 100
