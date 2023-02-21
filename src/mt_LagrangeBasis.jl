@@ -14,14 +14,14 @@ function mt_buildLagrange(; order=1, Nq=1)
     #
     # L[i,l] is the digital equivalent of Lᵢ(xk) in the book
     # where 'i' indicates the iᵗʰ Lagrange basis that is evaluated
-    # at the kᵗʰ quadrature point xk
+    # at the kᵗʰ point xk
     #------------------------------------------------------------------
     
     #
     # Nq: number of quadrature points
     #
     ξ = Array{Float64}(undef, 1)
-    ξ = range(-1, 1,  order + 1) # NOTICE: use LegendreGaussNodesAndWeights() for LGL points instead of equally spaced.
+    ξ = range(-1, 1,  order + 1) # NOTICE: use LegendreGaussNodesAndWeights() for LGL points instead of equally spaced.x
 
     x = Array{Float64}(undef, 1)
     x = range(-1, 1, Nq)
