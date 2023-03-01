@@ -21,21 +21,21 @@ function mt_LegendreGaussNodesAndWeights!(Legendre::St_Legendre, lg::St_lg, p::I
         for j=0:floor(Int64,(p+1)/2)-1
             ξ[j+1] = - cospi((2*j+1)/(2*p+2))
             for k=0:NITER
-                (ϕ, dϕdx, ~, ~) = mt_LegendreAndDerivativeAndQ!(p+1, ξ[j+1])
+                (ϕ, dϕdx, _, _) = mt_LegendreAndDerivativeAndQ!(p+1, ξ[j+1])
                 Δ = -ϕ/dϕdx
                 ξ[j+1] = ξ[j+1]+Δ
                 if (abs(Δ)≤TOL)
                     break
                 end
             end
-            (ϕ, dϕdx, ~, ~) = mt_LegendreAndDerivativeAndQ!(p+1, ξ[j+1])
+            (ϕ, dϕdx, _, _) = mt_LegendreAndDerivativeAndQ!(p+1, ξ[j+1])
             ξ[p-j+1] = -ξ[j+1]
             ω[j+1]   = 2.0/(1-ξ[j+1]^2)/(dϕdx)^2
             ω[p-j+1] = ω[j+1]
         end
     end
     if (mod(p,2) == 0)
-        (ϕ, dϕdx, ~, ~) = mt_LegendreAndDerivativeAndQ!(p+1, 0.0)
+        (ϕ, dϕdx, _, _) = mt_LegendreAndDerivativeAndQ!(p+1, 0.0)
         ξ[Int64(p/2)] = 0
         ω[Int64(p/2)] = 2/dϕdx^2
     end
@@ -105,7 +105,7 @@ function mt_LegendreGaussLobattoNodesAndWeights!(Legendre::St_Legendre, lgl::St_
                     break
                 end
 	    end
-            (ϕ, dϕdx, ~, ~) = LegendreAndDerivativeAndQ!(p, ξj)
+            (ϕ, dϕdx, _, _) = LegendreAndDerivativeAndQ!(p, ξj)
 	    ξ[jj]      =  ξj
 	    ξ[p+1-j] = -ξj
 	    xj2            =  ξj*ξj
@@ -117,7 +117,7 @@ function mt_LegendreGaussLobattoNodesAndWeights!(Legendre::St_Legendre, lgl::St_
     end
     
     if (mod(p,2) == 0)
-	(ϕ, dϕdx, ~, ~) = LegendreAndDerivativeAndQ!(p, 0.0);
+	(ϕ, dϕdx, _, _) = LegendreAndDerivativeAndQ!(p, 0.0);
 	ξ[Int64(p/2)+1] = 0.0;
 	
 	L2           = ϕ^2
